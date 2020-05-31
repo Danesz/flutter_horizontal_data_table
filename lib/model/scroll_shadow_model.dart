@@ -8,13 +8,13 @@ class ScrollShadowModel extends ChangeNotifier {
 
   set verticalOffset(double value) {
     _verticalOffset = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   double get horizontalOffset => _horizontalOffset;
 
   set horizontalOffset(double value) {
     _horizontalOffset = value;
-    notifyListeners();
+    //notifyListeners();
   }
 }

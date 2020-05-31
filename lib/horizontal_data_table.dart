@@ -98,14 +98,14 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
     _syncScroller
         .registerScrollController(_rightHandSideListViewScrollController);
     _leftHandSideListViewScrollController.addListener(() {
-      _scrollShadowModel.verticalOffset =
-          _leftHandSideListViewScrollController.offset;
-      setState(() {});
+      //_scrollShadowModel.verticalOffset =
+      //    _leftHandSideListViewScrollController.offset;
+      //setState(() {});
     });
     _rightHorizontalScrollController.addListener(() {
-      _scrollShadowModel.horizontalOffset =
-          _rightHorizontalScrollController.offset;
-      setState(() {});
+      //_scrollShadowModel.horizontalOffset =
+      //    _rightHorizontalScrollController.offset;
+      //setState(() {});
     });
   }
 
@@ -337,6 +337,7 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
       [List<Widget> children]) {
     if (indexedWidgetBuilder != null) {
       return ListView.separated(
+        addAutomaticKeepAlives: true,
         controller: scrollController,
         itemBuilder: indexedWidgetBuilder,
         itemCount: itemCount,
@@ -346,6 +347,7 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
       );
     } else {
       return ListView(
+        addAutomaticKeepAlives: true,
         controller: scrollController,
         children: children,
       );
