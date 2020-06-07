@@ -42,6 +42,7 @@ class HorizontalDataTable extends StatefulWidget {
 
   final Color leftHandSideColBackgroundColor;
   final Color rightHandSideColBackgroundColor;
+  final ScrollController rigthHandSideHorizontalScrollController;
 
   const HorizontalDataTable({
     @required this.leftHandSideColumnWidth,
@@ -62,6 +63,7 @@ class HorizontalDataTable extends StatefulWidget {
     this.elevationColor = Colors.black54,
     this.leftHandSideColBackgroundColor = Colors.white,
     this.rightHandSideColBackgroundColor = Colors.white,
+    this.rigthHandSideHorizontalScrollController,
   })
       : assert(
             (leftSideChildren == null && leftSideItemBuilder != null) ||
@@ -79,7 +81,7 @@ class HorizontalDataTable extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _HorizontalDataTableState();
+    return _HorizontalDataTableState(rigthHandSideHorizontalScrollController);
   }
 }
 
@@ -89,6 +91,8 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
   ScrollController _rightHorizontalScrollController = ScrollController();
   _SyncScrollControllerManager _syncScroller = _SyncScrollControllerManager();
   ScrollShadowModel _scrollShadowModel = ScrollShadowModel();
+
+  _HorizontalDataTableState(this._rightHorizontalScrollController);
 
   @override
   void initState() {
