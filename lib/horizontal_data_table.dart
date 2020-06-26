@@ -44,6 +44,9 @@ class HorizontalDataTable extends StatefulWidget {
   final Color rightHandSideColBackgroundColor;
   final ScrollController rigthHandSideHorizontalScrollController;
 
+  ///Vertical cache size for ListView
+  final double cacheExtent;
+
   const HorizontalDataTable({
     @required this.leftHandSideColumnWidth,
     @required this.rightHandSideColumnWidth,
@@ -64,15 +67,16 @@ class HorizontalDataTable extends StatefulWidget {
     this.leftHandSideColBackgroundColor = Colors.white,
     this.rightHandSideColBackgroundColor = Colors.white,
     this.rigthHandSideHorizontalScrollController,
+    this.cacheExtent
   })
-      : assert(
-            (leftSideChildren == null && leftSideItemBuilder != null) ||
-                (leftSideChildren == null),
-            'Either using itemBuilder or children to assign left side widgets'),
-        assert(
-            (rightSideChildren == null && rightSideItemBuilder != null) ||
-                (rightSideChildren == null),
-            'Either using itemBuilder or children to assign right side widgets'),
+      : //assert(
+        //    (leftSideChildren == null && leftSideItemBuilder != null) ||
+        //        (leftSideChildren == null),
+        //    'Either using itemBuilder or children to assign left side widgets'),
+        //assert(
+        //    (rightSideChildren == null && rightSideItemBuilder != null) ||
+        //        (rightSideChildren == null),
+        //    'Either using itemBuilder or children to assign right side widgets'),
         assert((isFixedHeader && headerWidgets != null) || !isFixedHeader,
             'If use fixed top row header, isFixedHeader==true, headerWidgets must not be null'),
         assert(itemCount >= 0, 'itemCount must >= 0'),
@@ -328,19 +332,21 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
         _rightHandSideListViewScrollController,
         widget.rightSideItemBuilder,
         widget.itemCount,
+        widget.cacheExtent,
         widget.rightSideChildren);
   }
 
   Widget _getLeftHandSideListView() {
     return _getListView(_leftHandSideListViewScrollController,
-        widget.leftSideItemBuilder, widget.itemCount, widget.leftSideChildren);
+        widget.leftSideItemBuilder, widget.itemCount, widget.cacheExtent, widget.leftSideChildren);
   }
 
   Widget _getListView(ScrollController scrollController,
-      IndexedWidgetBuilder indexedWidgetBuilder, int itemCount,
+      IndexedWidgetBuilder indexedWidgetBuilder, int itemCount, double cacheExtent,
       [List<Widget> children]) {
     if (indexedWidgetBuilder != null) {
       return ListView.separated(
+        key: UniqueKey(),
         addAutomaticKeepAlives: true,
         controller: scrollController,
         itemBuilder: indexedWidgetBuilder,
@@ -348,12 +354,15 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
         separatorBuilder: (context, index) {
           return widget.rowSeparatorWidget;
         },
+        cacheExtent: cacheExtent,
       );
     } else {
       return ListView(
+        key: UniqueKey(),
         addAutomaticKeepAlives: true,
         controller: scrollController,
         children: children,
+        cacheExtent: cacheExtent,
       );
     }
   }
