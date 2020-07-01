@@ -346,8 +346,6 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
       [List<Widget> children]) {
     if (indexedWidgetBuilder != null) {
       return ListView.separated(
-        key: UniqueKey(),
-        addAutomaticKeepAlives: true,
         controller: scrollController,
         itemBuilder: indexedWidgetBuilder,
         itemCount: itemCount,
@@ -358,8 +356,6 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
       );
     } else {
       return ListView(
-        key: UniqueKey(),
-        addAutomaticKeepAlives: true,
         controller: scrollController,
         children: children,
         cacheExtent: cacheExtent,
